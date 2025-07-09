@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naveen Thomas - Professional Services</title>
+    <title>Naveen Thomas - Let's innovate</title>
     
     <!-- Cache-busting meta tags -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -22,6 +22,9 @@
 
         html {
             scroll-behavior: smooth;
+            /* Prevent layout shifts */
+            overflow-x: hidden;
+            width: 100%;
         }
 
         body {
@@ -29,6 +32,33 @@
             background-color: #f5f3f0;
             color: #4a4a4a;
             line-height: 1.6;
+            /* Prevent layout shifts during load */
+            overflow-x: hidden;
+            width: 100%;
+            min-width: 320px;
+            position: relative;
+        }
+
+        /* Prevent animations from affecting layout during initial load */
+        body:not(.animations-ready) .photo-section {
+            animation: none !important;
+        }
+
+        body:not(.animations-ready) .photo-section::before,
+        body:not(.animations-ready) .photo-section::after {
+            animation: none !important;
+        }
+
+        body:not(.animations-ready) .floating-particles::before,
+        body:not(.animations-ready) .floating-particles::after {
+            animation: none !important;
+        }
+
+        body:not(.animations-ready) .mirror-frame,
+        body:not(.animations-ready) .mirror-reflection,
+        body:not(.animations-ready) .mirror-shine,
+        body:not(.animations-ready) .mirror-ground-reflection {
+            animation: none !important;
         }
 
         .container {
@@ -859,12 +889,28 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
             opacity: 1;
-            transform: translateY(0);
+            transform: translateZ(0) translateY(0);
             /* Ensure stable positioning from start */
             -webkit-transform: translateZ(0);
             transform: translateZ(0) translateY(0);
             will-change: transform;
             backface-visibility: hidden;
+            /* Account for potential scrollbar */
+            right: calc(20px + env(scrollbar-width, 0px));
+        }
+
+        /* Fallback for browsers without scrollbar-width support */
+        @supports not (width: env(scrollbar-width)) {
+            .nav-toggle {
+                right: 20px;
+            }
+        }
+
+        /* Ensure consistent positioning regardless of content */
+        @media screen and (min-width: 769px) {
+            .nav-toggle {
+                right: max(20px, calc(100vw - 100% + 20px));
+            }
         }
 
         .nav-toggle.hide-on-scroll {
@@ -1493,7 +1539,7 @@
                 width: 45px;
                 height: 45px;
                 font-size: 18px;
-                right: 15px;
+                right: 15px !important;
                 top: 15px;
                 transition: all 0.3s ease;
                 /* Force proper positioning on mobile from start */
@@ -1506,6 +1552,11 @@
                 min-width: 45px;
                 min-height: 45px;
                 box-sizing: border-box;
+            }
+            
+            /* Override with responsive positioning after layout is stable */
+            body.animations-ready .nav-toggle {
+                right: max(15px, calc(100vw - 100% + 15px)) !important;
             }
 
             .nav-toggle.active {
@@ -1560,6 +1611,19 @@
                 font-size: 13px;
             }
         }
+
+        /* Ensure nav-toggle is positioned correctly from the very start */
+        .nav-toggle {
+            /* Force immediate correct positioning */
+            right: 20px !important;
+        }
+
+        /* Override with responsive positioning after layout is stable */
+        body.animations-ready .nav-toggle {
+            right: max(20px, calc(100vw - 100% + 20px));
+        }
+
+        /* Right Side Navigation Panel */
     </style>
 </head>
 <body id="top">
@@ -2063,6 +2127,19 @@
         // Also fix after a very short delay to catch any layout shifts
         setTimeout(fixNavTogglePosition, 50);
         setTimeout(fixNavTogglePosition, 200);
+
+        // Enable animations after layout is stable
+        function enableAnimations() {
+            document.body.classList.add('animations-ready');
+        }
+
+        // Wait for layout to stabilize before starting animations
+        setTimeout(enableAnimations, 300);
+        
+        // Also enable on window load as backup
+        window.addEventListener('load', () => {
+            setTimeout(enableAnimations, 100);
+        });
 
         // Scroll-based nav-toggle visibility
         let lastScrollTop = 0;
