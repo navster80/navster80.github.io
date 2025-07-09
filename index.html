@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Naveen Thomas - Professional Services</title>
     <style>
         * {
@@ -20,62 +20,6 @@
             background-color: #f5f3f0;
             color: #4a4a4a;
             line-height: 1.6;
-        }
-
-        /* Add this to prevent initial positioning issues */
-        body.loading .nav-toggle {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        body:not(.loaded) .nav-toggle {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        body.loaded .nav-toggle {
-            opacity: 1;
-            pointer-events: auto;
-            transition: opacity 0.3s ease;
-        }
-        
-        /* Prevent layout shifts during loading */
-        body.loading {
-            overflow-x: hidden;
-        }
-
-        /* Add viewport stability */
-        @supports (padding: max(0px)) {
-            .nav-toggle {
-                right: max(20px, env(safe-area-inset-right, 20px));
-                top: max(20px, env(safe-area-inset-top, 20px));
-            }
-        }
-
-        /* Handle viewport changes */
-        @media screen and (max-width: 768px) {
-            @supports (padding: max(0px)) {
-                .nav-toggle {
-                    right: max(15px, env(safe-area-inset-right, 15px)) !important;
-                    top: max(15px, env(safe-area-inset-top, 15px)) !important;
-                }
-            }
-            
-            /* Fallback for devices without env() support */
-            @supports not (padding: max(0px)) {
-                .nav-toggle {
-                    right: 15px !important;
-                    top: 15px !important;
-                }
-            }
-            
-            /* Additional fallback for very small screens */
-            @media screen and (max-width: 320px) {
-                .nav-toggle {
-                    right: 10px !important;
-                    top: 10px !important;
-                }
-            }
         }
 
         .container {
@@ -905,27 +849,17 @@
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
-            /* Add these to ensure stable positioning */
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-            will-change: transform;
-            /* Ensure it's always visible */
-            min-width: 50px;
-            min-height: 50px;
-            max-width: 50px;
-            max-height: 50px;
         }
 
         .nav-toggle:hover {
             background-color: #4a4a4a;
-            transform: scale(1.1) translateZ(0);
+            transform: scale(1.1);
         }
 
         .nav-toggle.active {
             right: 270px;
             top: 20px;
             background-color: #4a4a4a;
-            transform: translateZ(0);
         }
 
         .side-nav {
@@ -1533,28 +1467,11 @@
                 font-size: 18px;
                 right: 15px;
                 top: 15px;
-                /* Add mobile-specific positioning fixes */
-                position: fixed !important;
-                z-index: 1001 !important;
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
-                backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
-                /* Ensure it's always visible on mobile */
-                min-width: 45px;
-                min-height: 45px;
-                max-width: 45px;
-                max-height: 45px;
-                /* Prevent it from being outside viewport */
-                right: max(15px, env(safe-area-inset-right, 15px));
-                top: max(15px, env(safe-area-inset-top, 15px));
             }
 
             .nav-toggle.active {
                 right: 250px;
                 top: 15px;
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
             }
 
             .side-nav {
@@ -1594,7 +1511,7 @@
         }
     </style>
 </head>
-<body id="top" class="loading">
+<body id="top">
     <header>
         <nav class="container">
             <a href="#" class="logo">Naveen Thomas</a>
@@ -1637,7 +1554,7 @@
                 <div class="hero-content-single">
                     <div class="hero-text-centered scroll-animate">
                         <h1>About me</h1>
-                        <p>I'm an AI, Cloud & Digital Transformation Leader with Partner-level technology consulting experience and 22+ years driving digital transformations. With a PhD in AI, I have proven success building high-performing teams and delivering complex solutions across Government, Telco, Media, and Life Sciences sectors.</p>
+                        <p>I'm an AI, Cloud & Digital Transformation Leader with Partner-level technology consulting and 22+ years experiencedriving digital transformations. With a PhD in AI, I have proven success building high-performing teams and delivering complex solutions across Government, Telco, Media, and Life Sciences sectors.</p>
                     </div>
                 </div>
                 <div style="text-align: center;">
@@ -1902,7 +1819,11 @@
     <footer id="contact">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section" style="text-align: center;">
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>naveen@naveenthomas.co.uk</p>
+                </div>
+                <div class="footer-section">
                     <h4>Follow</h4>
                     <p><a href="https://www.linkedin.com/in/naveenthomas1">LinkedIn</a></p>
                 </div>
@@ -1950,11 +1871,6 @@
             navToggle.classList.toggle('active');
             sideNav.classList.toggle('active');
             navOverlay.classList.toggle('active');
-            
-            // Ensure proper positioning after toggle
-            setTimeout(() => {
-                fixNavTogglePosition();
-            }, 10);
         }
 
         // Close navigation
@@ -1962,11 +1878,6 @@
             navToggle.classList.remove('active');
             sideNav.classList.remove('active');
             navOverlay.classList.remove('active');
-            
-            // Ensure proper positioning after close
-            setTimeout(() => {
-                fixNavTogglePosition();
-            }, 10);
         }
 
         // Event listeners
@@ -2072,49 +1983,6 @@
 
         // Initial check for elements already in view
         checkAnimation();
-
-        // Fix nav-toggle positioning on mobile
-        function fixNavTogglePosition() {
-            const navToggle = document.getElementById('navToggle');
-            if (navToggle) {
-                // Force recalculation of position
-                navToggle.style.position = 'fixed';
-                
-                // Ensure it's properly positioned relative to viewport
-                if (window.innerWidth <= 768) {
-                    navToggle.style.right = '15px';
-                    navToggle.style.top = '15px';
-                } else {
-                    navToggle.style.right = '20px';
-                    navToggle.style.top = '20px';
-                }
-            }
-        }
-
-        // Fix positioning on load and resize
-        window.addEventListener('load', fixNavTogglePosition);
-        window.addEventListener('resize', fixNavTogglePosition);
-        
-        // Also fix after a short delay to ensure all animations have started
-        setTimeout(fixNavTogglePosition, 100);
-        
-        // Add loaded class to body after page is ready
-        function markPageAsLoaded() {
-            document.body.classList.remove('loading');
-            document.body.classList.add('loaded');
-            // Fix positioning one more time after marking as loaded
-            setTimeout(fixNavTogglePosition, 50);
-        }
-        
-        // Mark page as loaded when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', markPageAsLoaded);
-        } else {
-            markPageAsLoaded();
-        }
-        
-        // Also mark as loaded after a short delay to ensure positioning is stable
-        setTimeout(markPageAsLoaded, 200);
     </script>
 </body>
 </html>
