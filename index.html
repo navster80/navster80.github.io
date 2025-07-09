@@ -860,13 +860,13 @@
 
         .nav-toggle.hide-on-scroll {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateZ(0) translateY(-20px);
             pointer-events: none;
         }
 
         .nav-toggle.show-on-scroll {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateZ(0) translateY(0);
             pointer-events: auto;
         }
 
@@ -1487,6 +1487,16 @@
                 right: 15px;
                 top: 15px;
                 transition: all 0.3s ease;
+                /* Force proper positioning on mobile from start */
+                position: fixed !important;
+                z-index: 1001 !important;
+                -webkit-transform: translateZ(0) translateY(0);
+                transform: translateZ(0) translateY(0);
+                backface-visibility: hidden;
+                /* Prevent layout shifts */
+                min-width: 45px;
+                min-height: 45px;
+                box-sizing: border-box;
             }
 
             .nav-toggle.active {
@@ -1496,13 +1506,13 @@
             
             .nav-toggle.hide-on-scroll {
                 opacity: 0;
-                transform: translateY(-15px);
+                transform: translateZ(0) translateY(-15px);
                 pointer-events: none;
             }
 
             .nav-toggle.show-on-scroll {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateZ(0) translateY(0);
                 pointer-events: auto;
             }
 
@@ -2011,6 +2021,39 @@
 
         // Initial check for elements already in view
         checkAnimation();
+
+        // Fix nav-toggle positioning immediately on load
+        function fixNavTogglePosition() {
+            const navToggle = document.getElementById('navToggle');
+            if (navToggle) {
+                // Force proper positioning
+                navToggle.style.position = 'fixed';
+                navToggle.style.zIndex = '1001';
+                
+                if (window.innerWidth <= 768) {
+                    navToggle.style.right = '15px';
+                    navToggle.style.top = '15px';
+                } else {
+                    navToggle.style.right = '20px';
+                    navToggle.style.top = '20px';
+                }
+            }
+        }
+
+        // Fix positioning immediately when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fixNavTogglePosition);
+        } else {
+            fixNavTogglePosition();
+        }
+
+        // Fix on window load and resize
+        window.addEventListener('load', fixNavTogglePosition);
+        window.addEventListener('resize', fixNavTogglePosition);
+
+        // Also fix after a very short delay to catch any layout shifts
+        setTimeout(fixNavTogglePosition, 50);
+        setTimeout(fixNavTogglePosition, 200);
 
         // Scroll-based nav-toggle visibility
         let lastScrollTop = 0;
