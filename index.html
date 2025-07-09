@@ -851,6 +851,11 @@
             transition: all 0.3s ease;
             opacity: 1;
             transform: translateY(0);
+            /* Ensure stable positioning from start */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0) translateY(0);
+            will-change: transform;
+            backface-visibility: hidden;
         }
 
         .nav-toggle.hide-on-scroll {
@@ -1846,11 +1851,7 @@
     <footer id="contact">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>naveen@naveenthomas.co.uk</p>
-                </div>
-                <div class="footer-section">
+                <div class="footer-section" style="text-align: center;">
                     <h4>Follow</h4>
                     <p><a href="https://www.linkedin.com/in/naveenthomas1">LinkedIn</a></p>
                 </div>
