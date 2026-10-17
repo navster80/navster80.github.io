@@ -18119,7 +18119,7 @@ $('restore').onclick=()=>{data=structuredClone(original);selected=new Set(compan
 $('current-year').onclick=()=>{$('year').value='2026';render()};$('all-years').onclick=()=>{$('year').value='';render()};
 function setCompanies(all){selected=new Set(all?companies():[]);[...$('companies').children].forEach(b=>b.setAttribute('aria-pressed',all));render()}$('all-companies').onclick=()=>setCompanies(true);$('no-companies').onclick=()=>setCompanies(false);
 document.querySelector('a[href="#methodology"]').addEventListener('click',()=>{$('methodology').open=true});
-let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>renderChart(filtered()),120)});init();render();
+let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>renderChart(filtered()),120)});$('chart-company-sort').value='country';init();render();
 </script>
 <script type="application/json" id="coverage-audit">
 {
