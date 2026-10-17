@@ -1634,6 +1634,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#videos">Videos</a></li>
                 <li><a href="#publications">Publications</a></li>
+                <li><a href="#experiments">Experiments</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#contact" class="book-btn">Get in touch</a></li>
@@ -1812,6 +1813,25 @@
             </div>
         </section>
 
+        <section class="publications" id="experiments">
+            <div class="container">
+                <h2 class="scroll-animate">Experiments</h2>
+                <p class="publications-intro scroll-animate">A collection of interactive experiments and prototypes. Explore the projects and see what I’m exploring.</p>
+
+                <div class="publications-grid">
+                    <article class="publication-card scroll-animate">
+                        <div class="publication-type">Interactive experiment</div>
+                        <h3><a href="atlas/llm-release-atlas.html" class="publication-link">Model Atlas — LLM release timeline</a></h3>
+                        <p class="publication-description">An interactive, source-linked explorer of representative large language model releases from 2018 to October 2026. Browse the timeline by company and model family.</p>
+                        <p><a href="atlas/llm-release-atlas.html" class="publication-link">Explore the experiment →</a></p>
+                    </article>
+                </div>
+                <div style="text-align: center;">
+                    <a href="#top" class="back-to-top">Back to Top</a>
+                </div>
+            </div>
+        </section>
+
         <section class="career-summary" id="experience">
             <div class="container">
                 <div class="career-content">
@@ -1968,6 +1988,7 @@
                     <li><a href="#about">About Me</a></li>
                     <li><a href="#videos">Innovation Cafe</a></li>
                     <li><a href="#publications">Publications</a></li>
+                    <li><a href="#experiments">Experiments</a></li>
                     <li><a href="#experience">Experience</a></li>
                     <li><a href="#skills">Core Skills</a></li>
                     <li><a href="#contact">Contact</a></li>
@@ -2011,7 +2032,7 @@
 
         // Highlight active section
         function updateActiveLink() {
-            const sections = ['top', 'about', 'videos', 'publications', 'experience', 'skills', 'contact'];
+            const sections = ['top', 'about', 'videos', 'publications', 'experiments', 'experience', 'skills', 'contact'];
             const scrollPosition = window.scrollY + 100;
 
             sections.forEach(sectionId => {
